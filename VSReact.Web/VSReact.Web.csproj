@@ -73,7 +73,6 @@
     <Content Include="app\index.js" />
     <Content Include="app\reducers\todosAsyncBackend.js" />
     <Content Include="package.json" />
-    <Content Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\actions\TodoActions.js" />
