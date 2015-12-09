@@ -14,7 +14,10 @@ module.exports = {
     publicPath: '/static/'
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.DefinePlugin({
+      __API_URL__: JSON.stringify(process.env.API_URL || '//localhost:51407')
+    })
   ],
   resolveLoader: {
     'fallback': path.join(__dirname, 'node_modules')

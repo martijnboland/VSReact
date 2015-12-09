@@ -3,9 +3,17 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Header from '../components/Header';
 import MainSection from '../components/MainSection';
-import * as TodoActions from '../actions/TodoActions';
+//import * as TodoActions from '../actions/TodoActions';
+import * as TodoActions from '../actions/TodoActionsAsyncBackend';
 
 class TodoApp extends Component {
+
+  componentDidMount() {
+    if (this.props.actions.getTodos) {
+      this.props.actions.getTodos();
+    }
+  }
+
   render() {
     const { todos, actions } = this.props;
 
