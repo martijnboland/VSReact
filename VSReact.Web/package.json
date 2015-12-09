@@ -7,7 +7,6 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "babel-core": "^5.6.18",
     "classnames": "^2.1.2",
     "isomorphic-fetch": "^2.2.0",
     "react": "^0.13.3",
@@ -16,6 +15,7 @@
     "redux-thunk": "^1.0.0"
   },
   "devDependencies": {
+    "babel-core": "^5.6.18",
     "babel-loader": "^5.1.4",
     "node-libs-browser": "^0.5.2",
     "raw-loader": "^0.5.1",
@@ -25,6 +25,5 @@
     "todomvc-app-css": "^2.0.1",
     "webpack": "^1.9.11",
     "webpack-dev-server": "^1.9.0"
-  }
-, "-vs-binding":{"ProjectOpened":["start"]}
+  }, "-vs-binding":{"ProjectOpened":["start"]}
 }
