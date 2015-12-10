@@ -6,5 +6,6 @@
     <div class="todoapp" id="root">
     </div>
   </body>
-  <script src="/static/bundle.js"></script>
+  <script src="{%=o.htmlWebpackPlugin.files.chunks.vendor.entry%}"></script>
+  <script src="{%=o.htmlWebpackPlugin.files.chunks.main.entry%}"></script>
 </html>
