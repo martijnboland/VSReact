@@ -4,7 +4,7 @@
   "description": "VS 2015 and React",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "webpack-dev-server --content-base build --port 3000 --config webpack.config.js --hot --progress --colors",
     "build": "webpack --config webpack.config.js --progress --profile --colors",
     "prod": "NODE_ENV=production webpack -p --config webpack.prod.config.js --progress --colors",
     "prod_windows": "set NODE_ENV=production&&webpack -p --config webpack.prod.config.js --progress --colors",
