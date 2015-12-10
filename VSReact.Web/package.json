@@ -7,8 +7,7 @@
     "start": "webpack-dev-server --content-base build --port 3000 --config webpack.config.js --hot --progress --colors",
     "build": "webpack --config webpack.config.js --progress --profile --colors",
     "prod": "NODE_ENV=production webpack -p --config webpack.prod.config.js --progress --colors",
-    "prod_windows": "set NODE_ENV=production&&webpack -p --config webpack.prod.config.js --progress --colors",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prod_windows": "set NODE_ENV=production&&webpack -p --config webpack.prod.config.js --progress --colors"
   },
   "dependencies": {
     "classnames": "^2.1.2",
