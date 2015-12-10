@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "build": "node_modules/.bin/webpack --config webpack.config.js --progress --profile --colors",
+    "build": "webpack --config webpack.config.js --progress --profile --colors",
     "prod": "NODE_ENV=production webpack -p --config webpack.prod.config.js --progress --colors",
     "prod_windows": "set NODE_ENV=production&&webpack -p --config webpack.prod.config.js --progress --colors",
     "test": "echo \"Error: no test specified\" && exit 1"
