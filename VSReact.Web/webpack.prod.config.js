@@ -10,7 +10,6 @@ var vendorPackages = Object.keys(pkg.dependencies).filter(function (el) {
 var outputFileTemplateSuffix = '-' + pkg.version;
 
 module.exports = {
-  devtool: 'eval',
   entry: {
     main: './app/index',
     vendor: vendorPackages
@@ -21,13 +20,16 @@ module.exports = {
     chunkFilename: '[id]' + outputFileTemplateSuffix + '.js'
   },
   plugins: [
-    new webpack.DefinePlugin({
-      __API_URL__: JSON.stringify(process.env.API_URL || 'http://localhost:51407')
-    }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
       filename: 'vendor' + outputFileTemplateSuffix + '.js',
       minChunks: Infinity
+    }),
+    new webpack.DefinePlugin({
+      __API_URL__: JSON.stringify(process.env.API_URL || 'http://localhost:51407'),
+      "process.env": {
+        NODE_ENV: JSON.stringify("production")
+      }
     }),
     new HtmlWebpackPlugin({
       template: 'index.html'

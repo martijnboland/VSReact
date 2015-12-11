@@ -1,3 +1,4 @@
+/// <binding ProjectOpened='Hot' />
 var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -9,7 +10,11 @@ var vendorPackages = Object.keys(pkg.dependencies).filter(function (el) {
 });
 
 module.exports = {
-  devtool: 'eval',
+  devServer: {
+    contentBase: './build',
+    host: 'localhost',
+    port: 3000
+  },
   entry: {
     main: [
       'webpack-dev-server/client?http://localhost:3000',

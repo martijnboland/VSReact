@@ -4,10 +4,9 @@
   "description": "VS 2015 and React",
   "main": "server.js",
   "scripts": {
-    "start": "webpack-dev-server --content-base build --port 3000 --config webpack.config.js --hot --progress --colors",
+    "start": "webpack-dev-server --config webpack.config.js --hot --progress --colors",
     "build": "webpack --config webpack.config.js --progress --profile --colors",
-    "prod": "NODE_ENV=production webpack -p --config webpack.prod.config.js --progress --colors",
-    "prod_windows": "set NODE_ENV=production&&webpack -p --config webpack.prod.config.js --progress --colors"
+    "prod": "webpack -p --config webpack.prod.config.js --progress --colors"
   },
   "dependencies": {
     "classnames": "^2.1.2",
@@ -29,5 +28,5 @@
     "todomvc-app-css": "^2.0.1",
     "webpack": "^1.9.11",
     "webpack-dev-server": "^1.9.0"
-  }, "-vs-binding":{"ProjectOpened":["start"]}
+  }
 }
