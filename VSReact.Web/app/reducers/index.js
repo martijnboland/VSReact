@@ -1,2 +1,9 @@
-//export { default as todos } from './todos';
-export { default as todos } from './todosAsyncBackend';
+import { combineReducers } from 'redux';
+import todos from './todosAsyncBackend';
+//import todos from './todos';
+
+const rootReducer = combineReducers({
+  todos
+});
+
+export default rootReducer;
