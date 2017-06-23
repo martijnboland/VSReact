@@ -90,7 +90,6 @@
     <Content Include="index.html" />
     <Content Include="app\reducers\index.js" />
     <Content Include="app\reducers\todos.js" />
-    <Content Include="webpack.prod.config.js" />
     <Content Include="webpack.config.js" />
   </ItemGroup>
   <ItemGroup>

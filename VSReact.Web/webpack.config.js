@@ -41,18 +41,15 @@ module.exports = {
       template: 'index.html'
     })
   ],
-  resolveLoader: {
-    'fallback': path.join(__dirname, 'node_modules')
-  },
   module: {
-    loaders: [{
+    rules: [{
       test: /\.js$/,
-      loaders: ['babel'],
+      loader: 'babel-loader',
       exclude: /node_modules/,
       include: __dirname
     }, {
       test: /\.css?$/,
-      loaders: ['style', 'raw'],
+      use: ['style-loader', 'raw-loader'],
       include: __dirname
     }]
   }
