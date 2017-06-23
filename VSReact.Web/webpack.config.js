@@ -14,13 +14,14 @@ var outputFileTemplateSuffix = '-' + pkg.version;
 module.exports = function(env) {
   
   env = env || {}; 
-  var isProd = env.production === true;
+  var isProd = env.NODE_ENV === 'production';
 
   // Setup base config for all environments
   var config = {
     plugins: [
       new webpack.DefinePlugin({
-        __API_URL__: JSON.stringify(process.env.API_URL || '//localhost:51407')
+        __API_URL__: JSON.stringify(process.env.API_URL || 'http://localhost:51407'),
+        'process.env.NODE_ENV': JSON.stringify(env.NODE_ENV || 'development')
       }),
       new HtmlWebpackPlugin({
         template: 'index.html'
@@ -55,7 +56,7 @@ module.exports = function(env) {
       name: 'vendor',
       filename: 'vendor' + outputFileTemplateSuffix + '.js',
       minChunks: Infinity
-    }))
+    }));
   } else { // dev 
     config.devServer = {
       contentBase: './build',

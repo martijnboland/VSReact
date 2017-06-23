@@ -7,7 +7,7 @@
   "scripts": {
     "start": "webpack-dev-server --config webpack.config.js --hot --progress --colors --devtool source-map",
     "build": "webpack --config webpack.config.js --progress --profile --colors",
-    "prod": "webpack --env.production --config webpack.config.js --progress --colors"
+    "prod": "webpack --env.NODE_ENV=production --config webpack.config.js --optimize-minimize --progress --colors"
   },
   "dependencies": {
     "classnames": "^2.2.5",
