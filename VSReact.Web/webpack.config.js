@@ -18,31 +18,28 @@ module.exports = function (env) {
 
   // Setup base config for all environments
   var config = {
-
-
     plugins: [
-
       new webpack.DefinePlugin({
         __API_URL__: JSON.stringify(process.env.API_URL || 'http://localhost:51407'),
         'process.env.NODE_ENV': JSON.stringify(env.NODE_ENV || 'development')
       }),
-
       new HtmlWebpackPlugin({
         template: 'index.html'
       })
-
     ],
     module: {
-      rules: [{
-        test: /\.js$/,
-        loader: 'babel-loader',
-        exclude: /node_modules/,
-        include: __dirname
-      }, {
-        test: /\.css?$/,
-        use: ['style-loader', 'raw-loader'],
-        include: __dirname
-      }]
+      rules: [
+        {
+          test: /\.js$/,
+          loader: 'babel-loader',
+          exclude: /node_modules/,
+          include: __dirname
+        }, {
+          test: /\.css?$/,
+          use: ['style-loader', 'raw-loader'],
+          include: __dirname
+        }
+      ]
     }
   }
 
