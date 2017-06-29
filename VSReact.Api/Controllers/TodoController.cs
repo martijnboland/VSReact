@@ -25,7 +25,7 @@ namespace TodoMvc.Controllers
             {
                 t.Url = String.Format("{0}/{1}", Request.RequestUri.ToString(), t.Id.ToString());
             }
-            
+
             return items;
         }
 
