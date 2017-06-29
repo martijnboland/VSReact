@@ -18,6 +18,10 @@ module.exports = function (env) {
 
   // Setup base config for all environments
   var config = {
+    devtool: 'source-map',
+    resolve: {
+      extensions: ['.ts', '.tsx', '.js', '.jsx']
+    },
     plugins: [
       new webpack.DefinePlugin({
         __API_URL__: JSON.stringify(process.env.API_URL || 'http://localhost:51407'),
@@ -30,9 +34,8 @@ module.exports = function (env) {
     module: {
       rules: [
         {
-          test: /\.js$/,
-          loader: 'babel-loader',
-          exclude: /node_modules/,
+          test: /\.tsx?$/,
+          loader: 'awesome-typescript-loader',
           include: __dirname
         }, {
           test: /\.css?$/,

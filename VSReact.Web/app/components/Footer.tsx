@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import classnames from 'classnames';
+import * as React from 'react';
+import * as classnames from 'classnames';
 import { SHOW_ALL, SHOW_MARKED, SHOW_UNMARKED } from '../constants/TodoFilters';
 
 const FILTER_TITLES = {
@@ -9,14 +8,15 @@ const FILTER_TITLES = {
   [SHOW_MARKED]: 'Completed'
 };
 
-export default class Footer extends Component {
-  static propTypes = {
-    markedCount: PropTypes.number.isRequired,
-    unmarkedCount: PropTypes.number.isRequired,
-    filter: PropTypes.string.isRequired,
-    onClearMarked: PropTypes.func.isRequired,
-    onShow: PropTypes.func.isRequired
-  }
+interface IFooterProps {
+  markedCount: number,
+  unmarkedCount: number,
+  filter: string,
+  onClearMarked(): void,
+  onShow(filter: string): void
+}
+
+export default class Footer extends React.Component<IFooterProps, any> {
 
   render() {
     return (

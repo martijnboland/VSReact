@@ -1,34 +1,39 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import TodoItem from './TodoItem';
+import * as React from 'react';
+import TodoItemComponent from './TodoItem';
 import Footer from './Footer';
 import { SHOW_ALL, SHOW_MARKED, SHOW_UNMARKED } from '../constants/TodoFilters';
+import { TodoItem } from "../model/TodoItem";
 
 const TODO_FILTERS = {
   [SHOW_ALL]: () => true,
-  [SHOW_UNMARKED]: todo => !todo.marked,
-  [SHOW_MARKED]: todo => todo.marked
+  [SHOW_UNMARKED]: todo => !todo.completed,
+  [SHOW_MARKED]: todo => todo.completed
 };
 
-export default class MainSection extends Component {
-  static propTypes = {
-    todos: PropTypes.array.isRequired,
-    actions: PropTypes.object.isRequired
-  };
+interface IMainSectionProps {
+  todos: TodoItem[],
+  actions: any
+}
+
+interface IMainSectionState {
+  filter: string
+}
+
+export default class MainSection extends React.Component<IMainSectionProps, IMainSectionState> {
 
   constructor(props, context) {
     super(props, context);
     this.state = { filter: SHOW_ALL };
   }
 
-  handleClearMarked() {
-    const atLeastOneMarked = this.props.todos.some(todo => todo.marked);
+  handleClearMarked = () => {
+    const atLeastOneMarked = this.props.todos.some(todo => todo.completed);
     if (atLeastOneMarked) {
       this.props.actions.clearMarked();
     }
   }
 
-  handleShow(filter) {
+  handleShow = (filter: string) => {
     this.setState({ filter });
   }
 
@@ -38,7 +43,7 @@ export default class MainSection extends Component {
 
     const filteredTodos = todos.filter(TODO_FILTERS[filter]);
     const markedCount = todos.reduce((count, todo) =>
-      todo.marked ? count + 1 : count,
+      todo.completed ? count + 1 : count,
       0
     );
 
@@ -47,7 +52,7 @@ export default class MainSection extends Component {
         {this.renderToggleAll(markedCount)}
         <ul className='todo-list'>
           {filteredTodos.map(todo =>
-            <TodoItem key={todo.id} todo={todo} {...actions} />
+            <TodoItemComponent key={todo.id} todo={todo} {...actions} />
           )}
         </ul>
         {this.renderFooter(markedCount)}
@@ -77,8 +82,8 @@ export default class MainSection extends Component {
         <Footer markedCount={markedCount}
                 unmarkedCount={unmarkedCount}
                 filter={filter}
-                onClearMarked={::this.handleClearMarked}
-                onShow={::this.handleShow} />
+                onClearMarked={this.handleClearMarked}
+                onShow={this.handleShow} />
       );
     }
   }

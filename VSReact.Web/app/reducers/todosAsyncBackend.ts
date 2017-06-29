@@ -6,13 +6,13 @@ export default function todos(state = initialState, action) {
   switch (action.type) {
     case GET_TODOS_SUCCESS:
       return action.todos.map(todo => { 
-        return { id: todo.id, marked: todo.completed, text: todo.title } 
+        return { id: todo.id, completed: todo.completed, text: todo.title } 
       });
 
     case ADD_TODO_SUCCESS:
       return [{
         id: action.id,
-        marked: false,
+        completed: false,
         text: action.text
       }, ...state];
 
@@ -31,14 +31,14 @@ export default function todos(state = initialState, action) {
     case MARK_TODO_SUCCESS:
       return state.map(todo =>
         todo.id === action.id ?
-          { ...todo, marked: action.marked } :
+          { ...todo, completed: action.completed } :
           todo
       );
 
     case MARK_ALL_SUCCESS:
       return state.map(todo => ({
         ...todo,
-        marked: action.areAllMarked
+        completed: action.areAllMarked
       }));
 
     case CLEAR_MARKED_SUCCESS:
