@@ -1,5 +1,7 @@
 ﻿import * as types from '../constants/ActionTypes';
-import fetch from 'isomorphic-fetch'
+import * as fetch from 'isomorphic-fetch'
+
+declare const __API_URL__: string;
 
 const apiUrl = __API_URL__;
 const todoApiUrl = apiUrl + '/todo';
@@ -8,8 +10,7 @@ function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
     return response
   } else {
-    var error = new Error(response.statusText)
-    error.response = response
+    const error = new Error(response.statusText)
     throw error
   }
 }
@@ -161,11 +162,11 @@ function markTodoRequest(id)  {
   }
 }
 
-function markTodoSuccess(id, marked)  {
+function markTodoSuccess(id, completed)  {
   return {
     type: types.MARK_TODO_SUCCESS,
     id,
-    marked
+    completed
   }
 }
 
@@ -174,7 +175,7 @@ export function markTodo(id) {
     dispatch(markTodoRequest(id));
 
     const todo = getState().todos.find(todo => { return todo.id === id });
-    const marked = todo && ! todo.marked;
+    const completed = todo && ! todo.completed;
 
     fetch(`${todoApiUrl}/${id}`, {
       method: 'patch',
@@ -183,13 +184,13 @@ export function markTodo(id) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        completed: marked
+        completed: completed
       })
     })
     .then(checkStatus)
     .then(parseJSON)
     .then(data => {
-      dispatch(markTodoSuccess(id, marked));
+      dispatch(markTodoSuccess(id, completed));
     })
     .catch(handleApiError);
   };
@@ -201,17 +202,17 @@ function markAllRequest() {
   }
 }
 
-function markAllSuccess(marked) {
+function markAllSuccess(completed) {
   return {
     type: types.MARK_ALL_SUCCESS,
-    areAllMarked: marked
+    areAllMarked: completed
   }
 }
 
 export function markAll() {
   return (dispatch, getState) => {
     const todos = getState().todos;
-    const shouldMarkAll = todos.some(todo => !todo.marked);
+    const shouldMarkAll = todos.some(todo => !todo.completed);
     const markRequests = [];
     dispatch(markAllRequest());
     todos.forEach(todo => {
@@ -250,7 +251,7 @@ function clearMarkedSuccess(idsCleared) {
 
 export function clearMarked() {
   return (dispatch, getState) => {
-    const markedTodos = getState().todos.filter(todo => todo.marked);
+    const markedTodos = getState().todos.filter(todo => todo.completed);
     let clearRequests = [];
     let idsCleared = [];
     dispatch(clearMarkedRequest());

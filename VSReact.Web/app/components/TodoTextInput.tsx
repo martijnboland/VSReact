@@ -1,15 +1,19 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import classnames from 'classnames';
+import * as React from 'react';
+import * as classnames from 'classnames';
 
-export default class TodoTextInput extends Component {
-  static propTypes = {
-    onSave: PropTypes.func.isRequired,
-    text: PropTypes.string,
-    placeholder: PropTypes.string,
-    editing: PropTypes.bool,
-    newTodo: PropTypes.bool
-  };
+interface ITodoTextInputProps {
+  onSave(text: string): void,
+  newTodo?: boolean,
+  text?: string,
+  editing?: boolean,
+  placeholder?: string
+}
+
+interface ITodoTextInputState {
+  text: string
+}
+
+export default class TodoTextInput extends React.Component<ITodoTextInputProps, ITodoTextInputState> {
 
   constructor(props, context) {
     super(props, context);
@@ -18,7 +22,7 @@ export default class TodoTextInput extends Component {
     };
   }
 
-  handleSubmit(e) {
+  handleSubmit = (e) => {
     const text = e.target.value.trim();
     if (e.which === 13) {
       this.props.onSave(text);
@@ -28,11 +32,11 @@ export default class TodoTextInput extends Component {
     }
   }
 
-  handleChange(e) {
+  handleChange = (e) => {
     this.setState({ text: e.target.value });
   }
 
-  handleBlur(e) {
+  handleBlur = (e) => {
     if (!this.props.newTodo) {
       this.props.onSave(e.target.value);
     }
@@ -46,11 +50,11 @@ export default class TodoTextInput extends Component {
              })}
              type='text'
              placeholder={this.props.placeholder}
-             autoFocus='true'
+             autoFocus={true}
              value={this.state.text}
-             onBlur={::this.handleBlur}
-             onChange={::this.handleChange}
-             onKeyDown={::this.handleSubmit} />
+             onBlur={this.handleBlur}
+             onChange={this.handleChange}
+             onKeyDown={this.handleSubmit} />
     );
   }
 }

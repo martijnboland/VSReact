@@ -68,28 +68,27 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include=".babelrc" />
-    <Content Include="app\actions\TodoActionsAsyncBackend.js" />
-    <Content Include="app\containers\DevTools.js" />
-    <Content Include="app\index.js" />
-    <Content Include="app\reducers\todosAsyncBackend.js" />
-    <Content Include="app\store\configureStore.js" />
+    <TypeScriptCompile Include="app\actions\TodoActionsAsyncBackend.ts" />
+    <TypeScriptCompile Include="app\containers\DevTools.tsx" />
+    <TypeScriptCompile Include="app\index.tsx" />
+    <TypeScriptCompile Include="app\reducers\todosAsyncBackend.ts" />
+    <TypeScriptCompile Include="app\store\configureStore.ts" />
     <Content Include="package.json" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="app\actions\TodoActions.js" />
-    <Content Include="app\components\Footer.js" />
-    <Content Include="app\components\Header.js" />
-    <Content Include="app\components\MainSection.js" />
-    <Content Include="app\components\TodoItem.js" />
-    <Content Include="app\components\TodoTextInput.js" />
-    <Content Include="app\constants\ActionTypes.js" />
-    <Content Include="app\constants\TodoFilters.js" />
-    <Content Include="app\containers\App.js" />
-    <Content Include="app\containers\TodoApp.js" />
+    <TypeScriptCompile Include="app\actions\TodoActions.ts" />
+    <TypeScriptCompile Include="app\components\Footer.tsx" />
+    <TypeScriptCompile Include="app\components\Header.tsx" />
+    <TypeScriptCompile Include="app\components\MainSection.tsx" />
+    <TypeScriptCompile Include="app\components\TodoItem.tsx" />
+    <TypeScriptCompile Include="app\components\TodoTextInput.tsx" />
+    <TypeScriptCompile Include="app\constants\ActionTypes.ts" />
+    <TypeScriptCompile Include="app\constants\TodoFilters.ts" />
+    <TypeScriptCompile Include="app\containers\App.tsx" />
+    <TypeScriptCompile Include="app\containers\TodoApp.tsx" />
     <Content Include="index.html" />
-    <Content Include="app\reducers\index.js" />
-    <Content Include="app\reducers\todos.js" />
+    <TypeScriptCompile Include="app\reducers\index.ts" />
+    <TypeScriptCompile Include="app\reducers\todos.ts" />
     <Content Include="webpack.config.js" />
   </ItemGroup>
   <ItemGroup>
@@ -99,7 +98,7 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include=".eslintrc" />
+    <Content Include="tsconfig.json" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

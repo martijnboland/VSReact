@@ -1,4 +1,4 @@
-/// <binding ProjectOpened='Hot' />
+﻿/// <binding ProjectOpened='Hot' />
 var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -11,13 +11,17 @@ var vendorPackages = Object.keys(pkg.dependencies).filter(function (el) {
 var outputFileTemplateSuffix = '-' + pkg.version;
 
 
-module.exports = function(env) {
-  
-  env = env || {}; 
+module.exports = function (env) {
+
+  env = env || {};
   var isProd = env.NODE_ENV === 'production';
 
   // Setup base config for all environments
   var config = {
+    devtool: 'source-map',
+    resolve: {
+      extensions: ['.ts', '.tsx', '.js', '.jsx']
+    },
     plugins: [
       new webpack.DefinePlugin({
         __API_URL__: JSON.stringify(process.env.API_URL || 'http://localhost:51407'),
@@ -28,16 +32,17 @@ module.exports = function(env) {
       })
     ],
     module: {
-      rules: [{
-        test: /\.js$/,
-        loader: 'babel-loader',
-        exclude: /node_modules/,
-        include: __dirname
-      }, {
-        test: /\.css?$/,
-        use: ['style-loader', 'raw-loader'],
-        include: __dirname
-      }]
+      rules: [
+        {
+          test: /\.tsx?$/,
+          loader: 'awesome-typescript-loader',
+          include: __dirname
+        }, {
+          test: /\.css?$/,
+          use: ['style-loader', 'raw-loader'],
+          include: __dirname
+        }
+      ]
     }
   }
 
