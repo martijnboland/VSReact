@@ -1,29 +1,34 @@
 import * as React from 'react';
+import { observer } from 'mobx-react';
 import * as classnames from 'classnames';
-import { SHOW_ALL, SHOW_MARKED, SHOW_UNMARKED } from '../constants/TodoFilters';
+import { TodoFilter } from '../store/AppState';
 
 const FILTER_TITLES = {
-  [SHOW_ALL]: 'All',
-  [SHOW_UNMARKED]: 'Active',
-  [SHOW_MARKED]: 'Completed'
+  [TodoFilter.All]: 'All',
+  [TodoFilter.Active]: 'Active',
+  [TodoFilter.Completed]: 'Completed'
 };
 
 interface IFooterProps {
   markedCount: number,
   unmarkedCount: number,
-  filter: string,
+  filter: TodoFilter,
   onClearMarked(): void,
-  onShow(filter: string): void
+  onShow(filter: TodoFilter): void
 }
 
-export default class Footer extends React.Component<IFooterProps, any> {
+@observer
+export default class Footer extends React.Component<IFooterProps, {}> {
 
   render() {
+    const filters: TodoFilter[] = Object.keys(TodoFilter)
+      .filter(key => !isNaN(Number(TodoFilter[key])))
+      .map(key => TodoFilter[key]);
     return (
       <footer className='footer'>
         {this.renderTodoCount()}
         <ul className='filters'>
-          {[SHOW_ALL, SHOW_UNMARKED, SHOW_MARKED].map(filter =>
+          {filters.map(filter =>
             <li key={filter}>
               {this.renderFilterLink(filter)}
             </li>
@@ -45,7 +50,7 @@ export default class Footer extends React.Component<IFooterProps, any> {
     );
   }
 
-  renderFilterLink(filter) {
+  renderFilterLink(filter: TodoFilter) {
     const title = FILTER_TITLES[filter];
     const { filter: selectedFilter, onShow } = this.props;
 

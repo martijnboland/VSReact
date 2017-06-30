@@ -9,6 +9,7 @@
     "target": "es5",
     "jsx": "react",
     "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
     "lib":[
       "es2016",
       "dom"

@@ -2,16 +2,18 @@ import 'todomvc-app-css/index.css';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
-import configureStore from './store/configureStore';
+import { AppState } from './store/AppState';
+import { TodoStore } from './store/TodoStore';
 
-const store = configureStore({});
+const appState = new AppState();
+const todoStore = new TodoStore();
 
 const renderApp = () => {
   const App = require('./containers/App').default;
 
   ReactDOM.render(
     <AppContainer>
-      <App store={store} />
+      <App appState={appState} todoStore={todoStore} />
     </AppContainer>,
     document.getElementById('root')
   );
