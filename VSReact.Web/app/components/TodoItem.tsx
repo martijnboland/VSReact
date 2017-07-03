@@ -14,8 +14,8 @@ interface ITodoItemState {
   editing: boolean
 }
 
-@observer
 @inject('todoStore')
+@observer
 export default class TodoItem extends React.Component<ITodoItemProps, ITodoItemState> {
 
   constructor(props, context) {

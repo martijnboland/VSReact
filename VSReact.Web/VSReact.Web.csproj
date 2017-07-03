@@ -72,8 +72,10 @@
     <TypeScriptCompile Include="app\containers\DevTools.tsx" />
     <TypeScriptCompile Include="app\index.tsx" />
     <TypeScriptCompile Include="app\reducers\todosAsyncBackend.ts" />
+    <TypeScriptCompile Include="app\store\AppState.ts" />
     <TypeScriptCompile Include="app\store\configureStore.ts" />
     <Content Include="package.json" />
+    <TypeScriptCompile Include="app\store\TodoStore.ts" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="app\actions\TodoActions.ts" />

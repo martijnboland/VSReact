@@ -24,7 +24,7 @@ export class TodoStore {
 
   @action addTodo(todo: string): void {
     const newTodo: TodoItem = { 
-      id: (this.todos.length === 0) ? 0 : this.todos[0].id + 1,
+      id: (this.todos.length === 0) ? 0 : this.todos[this.todos.length - 1].id + 1,
       completed: false,
       text: todo
     }
@@ -52,6 +52,6 @@ export class TodoStore {
   }
 
   @action clearCompleted(): void {
-    this.todos = this.todos.filter(t => t.completed === true);
+    this.todos = this.todos.filter(t => t.completed === false);
   }
 }

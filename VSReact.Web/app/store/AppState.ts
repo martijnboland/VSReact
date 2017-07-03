@@ -5,7 +5,7 @@ useStrict(true);
 export class AppState {
 
   constructor() {
-    this.currentTodoFilter = TodoFilter.Active;
+    this.currentTodoFilter = TodoFilter.All;
   }
 
   @observable public currentTodoFilter: TodoFilter;
