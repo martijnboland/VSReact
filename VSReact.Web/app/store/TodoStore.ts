@@ -52,6 +52,6 @@ export class TodoStore {
   }
 
   @action clearCompleted(): void {
-    this.todos = this.todos.filter(t => t.completed === false);
+    this.todos = this.todos.filter(t => ! t.completed);
   }
 }

@@ -31,6 +31,10 @@ export default class MainSection extends React.Component<IMainSectionProps, {}> 
     }
   }
 
+  handleMarkAllCompleted = () => {
+    this.props.todoStore.markAllCompleted();
+  }
+
   handleShow = (filter: TodoFilter) => {
     this.props.appState.setTodoFilter(filter);
   }
@@ -57,10 +61,14 @@ export default class MainSection extends React.Component<IMainSectionProps, {}> 
     const { todoStore } = this.props;
     if (todoStore.todos.length > 0) {
       return (
-        <input className='toggle-all'
-               type='checkbox'
-               checked={completedCount === todoStore.todos.length}
-               onChange={todoStore.markAllCompleted} />
+        <div>
+          <input id='toggle-all'
+                className='toggle-all'
+                type='checkbox'
+                checked={completedCount === todoStore.todos.length}
+                onChange={this.handleMarkAllCompleted} />
+          <label htmlFor='toggle-all' />
+        </div>
       );
     }
   }
