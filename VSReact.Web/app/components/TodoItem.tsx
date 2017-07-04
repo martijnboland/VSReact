@@ -44,7 +44,7 @@ export default class TodoItem extends React.Component<ITodoItemProps, ITodoItemS
     let element;
     if (this.state.editing) {
       element = (
-        <TodoTextInput text={todo.text}
+        <TodoTextInput text={todo.title}
                        editing={this.state.editing}
                        onSave={(text) => this.handleSave(todo.id, text)} />
       );
@@ -54,9 +54,9 @@ export default class TodoItem extends React.Component<ITodoItemProps, ITodoItemS
           <input className='toggle'
                  type='checkbox'
                  checked={todo.completed}
-                 onChange={() => todoStore.markCompleted(todo.id)} />
+                 onChange={() => todoStore.toggleCompleted(todo.id)} />
           <label onDoubleClick={this.handleDoubleClick}>
-            {todo.text}
+            {todo.title}
           </label>
           <button className='destroy'
                   onClick={() => todoStore.deleteTodo(todo.id)} />

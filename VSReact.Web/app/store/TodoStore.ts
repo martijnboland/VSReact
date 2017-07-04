@@ -1,5 +1,6 @@
 ﻿import { observable, action, computed } from 'mobx';
-import { TodoItem } from "../model/TodoItem";
+import { TodoItem } from '../model/TodoItem';
+import { TodosApi } from '../apiclient';
 
 export class TodoStore {
 
@@ -18,40 +19,70 @@ export class TodoStore {
 		return this.todos.length - this.activeTodoCount;
 	}
 
-  @action loadTodos(): void {
+  @action loadTodos(): Promise<any> {
     this.todos = [];
+    return TodosApi.getAll()
+      .then(action((data: Array<any> )=> {
+        data.forEach(todo => this.todos.push(new TodoItem(todo)));
+      }));
   }
 
-  @action addTodo(todo: string): void {
-    const newTodo: TodoItem = { 
-      id: (this.todos.length === 0) ? 0 : this.todos[this.todos.length - 1].id + 1,
+  @action addTodo(todo: string): Promise<any> {
+    const newTodo = {
       completed: false,
-      text: todo
-    }
-    this.todos.push(newTodo);
+      title: todo
+    };
+    return TodosApi.add(newTodo)
+      .then(action((data: any) => {
+        this.todos.push(new TodoItem(data));
+      }));
   }
 
-  @action editTodo(id: number, text: string): void {
+  @action editTodo(id: number, title: string): Promise<any> {
+    return TodosApi.patch(id, { title: title })
+      .then(action(() => {
+        let todo = this.todos.find(t => t.id === id);
+        todo.title = title;
+      }));
+  }
+
+  @action deleteTodo(id: number): Promise<any> {
+    return TodosApi.remove(id)
+      .then(action(() => {
+        let todo = this.todos.find(t => t.id === id);
+        const index = this.todos.indexOf(todo);
+        this.todos.splice(index, 1);
+      }));
+  }
+
+  @action toggleCompleted(id: number): Promise<any> {
     let todo = this.todos.find(t => t.id === id);
-    todo.text = text;
+    const completed = ! todo.completed;
+    
+    return TodosApi.patch(id, { completed: completed })
+      .then(action(() => {
+        todo.completed = completed;
+      }));
   }
 
-  @action deleteTodo(id: number): void {
-    let todo = this.todos.find(t => t.id === id);
-    const index = this.todos.indexOf(todo);
-    this.todos.splice(index, 1);
+  @action markAllCompleted(): Promise<any> {
+    const markPromises: Promise<any>[] = [];
+    this.todos.forEach(todo => {
+      todo.completed = true;
+      markPromises.push(TodosApi.patch(todo.id, { completed: todo.completed }))
+    })
+    return Promise.all(markPromises);
   }
 
-  @action markCompleted(id: number): void {
-    let todo = this.todos.find(t => t.id === id);
-    todo.completed = ! todo.completed;
-  }
-
-  @action markAllCompleted(): void {
-    this.todos.forEach(t => t.completed = true)
-  }
-
-  @action clearCompleted(): void {
-    this.todos = this.todos.filter(t => ! t.completed);
+  @action clearCompleted(): Promise<any> {
+    const completedTodos = this.todos.filter(t => t.completed);
+    const removePromises: Promise<any>[] = [];
+    completedTodos.forEach(todo => {
+      removePromises.push(TodosApi.remove(todo.id));
+    });
+    return Promise.all(completedTodos)
+      .then(action(() => {
+        this.todos = this.todos.filter(t => ! t.completed);
+      }));
   }
 }

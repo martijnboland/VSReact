@@ -4,8 +4,20 @@ export class TodoItem {
   id?: number;
   
   @observable 
-  text: string;
+  title: string;
   
   @observable
   completed: boolean;
+
+  public constructor(init?:Partial<TodoItem>) {
+    Object.assign(this, init);
+  }
+
+  public toJs(): any {
+    return {
+      id: this.id,
+      title: this.title,
+      completed: this.completed
+    }
+  }
 };
