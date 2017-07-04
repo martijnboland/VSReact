@@ -1,6 +1,6 @@
 ﻿import { observable, action, computed } from 'mobx';
 import { TodoItem } from '../model/TodoItem';
-import { TodosApi } from '../apiclient';
+import { todosApi } from '../apiclient';
 
 export class TodoStore {
 
@@ -21,7 +21,7 @@ export class TodoStore {
 
   @action loadTodos(): Promise<any> {
     this.todos = [];
-    return TodosApi.getAll()
+    return todosApi.getAll()
       .then(action((data: Array<any> )=> {
         data.forEach(todo => this.todos.push(new TodoItem(todo)));
       }));
@@ -32,14 +32,14 @@ export class TodoStore {
       completed: false,
       title: todo
     };
-    return TodosApi.add(newTodo)
+    return todosApi.add(newTodo)
       .then(action((data: any) => {
         this.todos.push(new TodoItem(data));
       }));
   }
 
   @action editTodo(id: number, title: string): Promise<any> {
-    return TodosApi.patch(id, { title: title })
+    return todosApi.patch(id, { title: title })
       .then(action(() => {
         let todo = this.todos.find(t => t.id === id);
         todo.title = title;
@@ -47,7 +47,7 @@ export class TodoStore {
   }
 
   @action deleteTodo(id: number): Promise<any> {
-    return TodosApi.remove(id)
+    return todosApi.remove(id)
       .then(action(() => {
         let todo = this.todos.find(t => t.id === id);
         const index = this.todos.indexOf(todo);
@@ -59,7 +59,7 @@ export class TodoStore {
     let todo = this.todos.find(t => t.id === id);
     const completed = ! todo.completed;
     
-    return TodosApi.patch(id, { completed: completed })
+    return todosApi.patch(id, { completed: completed })
       .then(action(() => {
         todo.completed = completed;
       }));
@@ -69,7 +69,7 @@ export class TodoStore {
     const markPromises: Promise<any>[] = [];
     this.todos.forEach(todo => {
       todo.completed = true;
-      markPromises.push(TodosApi.patch(todo.id, { completed: todo.completed }))
+      markPromises.push(todosApi.patch(todo.id, { completed: todo.completed }))
     })
     return Promise.all(markPromises);
   }
@@ -78,7 +78,7 @@ export class TodoStore {
     const completedTodos = this.todos.filter(t => t.completed);
     const removePromises: Promise<any>[] = [];
     completedTodos.forEach(todo => {
-      removePromises.push(TodosApi.remove(todo.id));
+      removePromises.push(todosApi.remove(todo.id));
     });
     return Promise.all(completedTodos)
       .then(action(() => {

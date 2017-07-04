@@ -29,7 +29,7 @@ const requests = {
     .catch(handleErrors)
 };
 
-export const TodosApi = {
+export const todosApi = {
   getAll: () => requests.get('/todo'),
   add: (todo: any) => requests.post('/todo', todo),
   remove: (id: number) => requests.del(`/todo/${id}`),

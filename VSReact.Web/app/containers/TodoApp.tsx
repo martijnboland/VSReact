@@ -1,18 +1,17 @@
 import * as React from 'react';
-import { observer, inject } from 'mobx-react'
+import { observer } from 'mobx-react'
 import Header from '../components/Header';
 import MainSection from '../components/MainSection';
-import { TodoItem } from "../model/TodoItem";
-import { TodoStore } from "../store/TodoStore";
-import { AppState } from "../store/AppState";
+import { TodoStore } from '../store/TodoStore';
+import { AppState } from '../store/AppState';
 
-interface TodoAppProps {
+interface ITodoAppProps {
   appState: AppState,
   todoStore: TodoStore
 }
 
 @observer
-export default class TodoApp extends React.Component<TodoAppProps, {}> {
+export default class TodoApp extends React.Component<ITodoAppProps, {}> {
 
   componentDidMount() {
     if (this.props.todoStore.loadTodos) {

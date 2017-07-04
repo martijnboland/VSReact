@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { observer, inject } from 'mobx-react';
+import { observer } from 'mobx-react';
 import TodoItemComponent from './TodoItem';
 import Footer from './Footer';
-import { TodoItem } from '../model/TodoItem';
 import { AppState, TodoFilter } from '../store/AppState';
 import { TodoStore } from '../store/TodoStore';
 
