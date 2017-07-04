@@ -3,7 +3,7 @@ React TodoMVC app with ASP.NET Web Api backend, developed with Visual Studio.
 
 The ReactJS frontend app originated from the [Redux Devtools TodoMVC example](https://github.com/gaearon/redux-devtools/tree/master/examples/todomvc), 
 but has been rewritten with [TypeScript](https://www.typescriptlang.org/) and [MobX](https://mobx.js.org/index.html). The original ES2015/Redux
-version can still found at [a new repo](https://github.com/martijnboland/VSReact-Redux).
+version can still be found at [a new repo](https://github.com/martijnboland/VSReact-Redux).
 
 The ASP.NET Web Api backend app is a slightly modified version of https://github.com/mforman/todo-backend-webapi
 
