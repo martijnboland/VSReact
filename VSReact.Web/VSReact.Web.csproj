@@ -68,27 +68,21 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="app\actions\TodoActionsAsyncBackend.ts" />
-    <TypeScriptCompile Include="app\containers\DevTools.tsx" />
+    <TypeScriptCompile Include="app\apiclient.ts" />
     <TypeScriptCompile Include="app\index.tsx" />
-    <TypeScriptCompile Include="app\reducers\todosAsyncBackend.ts" />
-    <TypeScriptCompile Include="app\store\configureStore.ts" />
+    <TypeScriptCompile Include="app\store\AppState.ts" />
     <Content Include="package.json" />
+    <TypeScriptCompile Include="app\store\TodoStore.ts" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="app\actions\TodoActions.ts" />
     <TypeScriptCompile Include="app\components\Footer.tsx" />
     <TypeScriptCompile Include="app\components\Header.tsx" />
     <TypeScriptCompile Include="app\components\MainSection.tsx" />
     <TypeScriptCompile Include="app\components\TodoItem.tsx" />
     <TypeScriptCompile Include="app\components\TodoTextInput.tsx" />
-    <TypeScriptCompile Include="app\constants\ActionTypes.ts" />
-    <TypeScriptCompile Include="app\constants\TodoFilters.ts" />
     <TypeScriptCompile Include="app\containers\App.tsx" />
     <TypeScriptCompile Include="app\containers\TodoApp.tsx" />
     <Content Include="index.html" />
-    <TypeScriptCompile Include="app\reducers\index.ts" />
-    <TypeScriptCompile Include="app\reducers\todos.ts" />
     <Content Include="webpack.config.js" />
   </ItemGroup>
   <ItemGroup>

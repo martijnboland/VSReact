@@ -1,87 +1,86 @@
 import * as React from 'react';
+import { observer } from 'mobx-react';
 import TodoItemComponent from './TodoItem';
 import Footer from './Footer';
-import { SHOW_ALL, SHOW_MARKED, SHOW_UNMARKED } from '../constants/TodoFilters';
-import { TodoItem } from "../model/TodoItem";
+import { AppState, TodoFilter } from '../store/AppState';
+import { TodoStore } from '../store/TodoStore';
 
 const TODO_FILTERS = {
-  [SHOW_ALL]: () => true,
-  [SHOW_UNMARKED]: todo => !todo.completed,
-  [SHOW_MARKED]: todo => todo.completed
+  [TodoFilter.All]: () => true,
+  [TodoFilter.Active]: todo => !todo.completed,
+  [TodoFilter.Completed]: todo => todo.completed
 };
 
 interface IMainSectionProps {
-  todos: TodoItem[],
-  actions: any
+  appState: AppState,
+  todoStore: TodoStore
 }
 
-interface IMainSectionState {
-  filter: string
-}
-
-export default class MainSection extends React.Component<IMainSectionProps, IMainSectionState> {
+@observer
+export default class MainSection extends React.Component<IMainSectionProps, {}> {
 
   constructor(props, context) {
     super(props, context);
-    this.state = { filter: SHOW_ALL };
   }
 
   handleClearMarked = () => {
-    const atLeastOneMarked = this.props.todos.some(todo => todo.completed);
+    const atLeastOneMarked = this.props.todoStore.todos.some(todo => todo.completed);
     if (atLeastOneMarked) {
-      this.props.actions.clearMarked();
+      this.props.todoStore.clearCompleted();
     }
   }
 
-  handleShow = (filter: string) => {
-    this.setState({ filter });
+  handleMarkAllCompleted = () => {
+    this.props.todoStore.markAllCompleted();
+  }
+
+  handleShow = (filter: TodoFilter) => {
+    this.props.appState.setTodoFilter(filter);
   }
 
   render() {
-    const { todos, actions } = this.props;
-    const { filter } = this.state;
+    const { todoStore, appState } = this.props;
 
-    const filteredTodos = todos.filter(TODO_FILTERS[filter]);
-    const markedCount = todos.reduce((count, todo) =>
-      todo.completed ? count + 1 : count,
-      0
-    );
+    const filteredTodos = todoStore.todos.filter(TODO_FILTERS[appState.currentTodoFilter]);
 
     return (
       <section className='main'>
-        {this.renderToggleAll(markedCount)}
+        {this.renderToggleAll(todoStore.completedCount)}
         <ul className='todo-list'>
           {filteredTodos.map(todo =>
-            <TodoItemComponent key={todo.id} todo={todo} {...actions} />
+            <TodoItemComponent key={todo.id} todo={todo} />
           )}
         </ul>
-        {this.renderFooter(markedCount)}
+        {this.renderFooter(todoStore.completedCount)}
       </section>
     );
   }
 
-  renderToggleAll(markedCount) {
-    const { todos, actions } = this.props;
-    if (todos.length > 0) {
+  renderToggleAll(completedCount) {
+    const { todoStore } = this.props;
+    if (todoStore.todos.length > 0) {
       return (
-        <input className='toggle-all'
-               type='checkbox'
-               checked={markedCount === todos.length}
-               onChange={actions.markAll} />
+        <div>
+          <input id='toggle-all'
+                className='toggle-all'
+                type='checkbox'
+                checked={completedCount === todoStore.todos.length}
+                onChange={this.handleMarkAllCompleted} />
+          <label htmlFor='toggle-all' />
+        </div>
       );
     }
   }
 
   renderFooter(markedCount) {
-    const { todos } = this.props;
-    const { filter } = this.state;
-    const unmarkedCount = todos.length - markedCount;
+    const { todoStore, appState } = this.props;
+    const unmarkedCount = todoStore.todos.length - markedCount;
 
-    if (todos.length) {
+    if (todoStore.todos.length) {
       return (
-        <Footer markedCount={markedCount}
-                unmarkedCount={unmarkedCount}
-                filter={filter}
+        <Footer markedCount={todoStore.completedCount}
+                unmarkedCount={todoStore.activeTodoCount}
+                filter={appState.currentTodoFilter}
                 onClearMarked={this.handleClearMarked}
                 onShow={this.handleShow} />
       );

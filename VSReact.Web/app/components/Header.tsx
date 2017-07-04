@@ -1,15 +1,16 @@
 import * as React from 'react';
 import TodoTextInput from './TodoTextInput';
+import { TodoStore } from '../store/TodoStore';
 
 interface IHeaderProps {
-  addTodo(todo: string) : void
+  todoStore: TodoStore
 }
 
 export default class Header extends React.Component<IHeaderProps, any> {
   
   handleSave = (text: string) => {
     if (text.length !== 0) {
-      this.props.addTodo(text);
+      this.props.todoStore.addTodo(text);
     }
   }
 

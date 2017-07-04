@@ -1,20 +1,22 @@
 import * as React from 'react';
-import { Provider } from 'react-redux';
+import { Provider } from 'mobx-react';
 import TodoApp from './TodoApp';
-import DevTools from './DevTools';
-import { Store } from "redux";
+import DevTools from 'mobx-react-devtools'
+import { AppState } from '../store/AppState';
+import { TodoStore } from '../store/TodoStore';
 
-interface RootProps {
-    store: Store<any>;
+interface IRootProps {
+  appState: AppState,
+  todoStore: TodoStore
 }
 
-export default class Root extends React.Component<RootProps, void> {
+export default class Root extends React.Component<IRootProps, void> {
   render() {
-    const { store } = this.props;
+    const { appState, todoStore } = this.props;
     return (
-      <Provider store={store}>
+      <Provider appState={appState} todoStore={todoStore}>
         <div>
-          <TodoApp />
+          <TodoApp appState={appState} todoStore={todoStore} />
           <DevTools />
         </div>
       </Provider>

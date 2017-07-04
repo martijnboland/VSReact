@@ -1,47 +1,32 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { observer } from 'mobx-react'
 import Header from '../components/Header';
 import MainSection from '../components/MainSection';
-//import * as TodoActions from '../actions/TodoActions';
-import * as TodoActions from '../actions/TodoActionsAsyncBackend';
-import { TodoItem } from "../model/TodoItem";
+import { TodoStore } from '../store/TodoStore';
+import { AppState } from '../store/AppState';
 
-interface TodoAppProps {
-  actions: any,
-  todos: TodoItem[]
+interface ITodoAppProps {
+  appState: AppState,
+  todoStore: TodoStore
 }
 
-class TodoApp extends React.Component<TodoAppProps, void> {
+@observer
+export default class TodoApp extends React.Component<ITodoAppProps, {}> {
 
   componentDidMount() {
-    if (this.props.actions.getTodos) {
-      this.props.actions.getTodos();
+    if (this.props.todoStore.loadTodos) {
+      this.props.todoStore.loadTodos();
     }
   }
 
   render() {
-    const { todos, actions } = this.props;
+    const { appState, todoStore } = this.props;
 
     return (
       <div>
-        <Header addTodo={actions.addTodo} />
-        <MainSection todos={todos} actions={actions} />
+        <Header todoStore={todoStore} />
+        <MainSection appState={appState} todoStore={todoStore} />
       </div>
     );
   }
 }
-
-function mapStateToProps(state) {
-  return {
-    todos: state.todos
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators<any>(TodoActions, dispatch)
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(TodoApp);
