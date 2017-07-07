@@ -70,6 +70,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="app\apiclient.ts" />
     <TypeScriptCompile Include="app\index.tsx" />
+    <TypeScriptCompile Include="app\model\TodoItem.ts" />
     <TypeScriptCompile Include="app\store\AppState.ts" />
     <Content Include="package.json" />
     <TypeScriptCompile Include="app\store\TodoStore.ts" />
